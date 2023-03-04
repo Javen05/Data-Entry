@@ -1,0 +1,30 @@
+function main(workbook: ExcelScript.Workbook) {
+    let sheet = workbook.getActiveWorksheet();
+    var range = 4;
+
+    // if SKU have multiple rows
+    let seenValues = new Set();
+
+    for (let i = 2; i <= range; i++) {
+
+        s
+
+        // init cells
+        let cell1 = sheet.getRange("A" + i);
+        let cell2 = sheet.getRange("B" + i);
+        let cell3 = sheet.getRange("C" + i);
+        let cell4 = sheet.getRange("D" + i);
+
+        // assign cell's value
+        let value1 = cell1.getValue();
+        let value2 = cell2.getValue();
+
+        // calculate
+        let calc1 = value1 / value2;
+        let calc2 = calc1.toFixed(2);
+
+        // place calculated values in cells
+        cell3.setValue(calc1);
+        cell4.setValue(calc2);
+    }
+}
