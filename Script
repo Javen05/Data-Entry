@@ -1,16 +1,16 @@
 function main(workbook: ExcelScript.Workbook) {
-    let sheet = workbook.getActiveWorksheet();
+    let SHEET = workbook.getActiveWorksheet();
 
-    var range = 10;
-    var sku = "F";
+    var RANGE = 7;
+    var SKU = "F";
 
     // check for duplicate SKUs
     var completed = new Set();
     var multiRows = {};
 
-    for (let i = 2; i <= range; i++) {
+    for (let i = 2; i <= RANGE; i++) {
 
-        let skuCell = sheet.getRange(sku + i);
+        let skuCell = SHEET.getRange(SKU + i);
         let skuValue = skuCell.getValue();
 
         if (completed.has(skuValue)) {
@@ -22,16 +22,16 @@ function main(workbook: ExcelScript.Workbook) {
 
     }
 
-    for (let i = 2; i <= range; i++) {
+    for (let i = 2; i <= RANGE; i++) {
 
-        let skuCell = sheet.getRange(sku + i);
+        let skuCell = SHEET.getRange(SKU + i);
         let skuValue = skuCell.getValue();
 
         // init cells
-        let cell1 = sheet.getRange("A" + i);
-        let cell2 = sheet.getRange("B" + i);
-        let cell3 = sheet.getRange("C" + i);
-        let cell4 = sheet.getRange("D" + i);
+        let cell1 = SHEET.getRange("A" + i);
+        let cell2 = SHEET.getRange("B" + i);
+        let cell3 = SHEET.getRange("C" + i);
+        let cell4 = SHEET.getRange("D" + i);
 
         // assign cell's value
         let value1 = cell1.getValue();
@@ -49,7 +49,30 @@ function main(workbook: ExcelScript.Workbook) {
         }
 
         else {
-          //
+          multiRows[skuValue].push(parseFloat(value1));
+          multiRows[skuValue].push(parseFloat(value2));
         }
     }
+
+  for (let row in multiRows) {
+
+      let value1 = 0;
+      let value2 = 0;
+
+      for (let i = 0; i < multiRows[row].length; i++) {
+
+      if (i % 2 === 0) {
+        value1 += multiRows[row][i];
+
+      } else {
+        value2 += multiRows[row][i];
+      }
+
+    }
+
+    multiRows[row] = [value1, value2]
+  }
+  
+  console.log(multiRows)
+
 }
