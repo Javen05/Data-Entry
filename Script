@@ -1,6 +1,4 @@
-<code>
-    
-function main(workbook: ExcelScript.Workbook) {
+  function main(workbook: ExcelScript.Workbook) {
     let SHEET = workbook.getActiveWorksheet();
 
     var RANGE = 7;
@@ -78,4 +76,3 @@ function main(workbook: ExcelScript.Workbook) {
   console.log(multiRows)
 
 }
-</code>
