@@ -1,13 +1,31 @@
 function main(workbook: ExcelScript.Workbook) {
     let sheet = workbook.getActiveWorksheet();
-    var range = 4;
 
-    // if SKU have multiple rows
-    let seenValues = new Set();
+    var range = 10;
+    var sku = "F";
+
+    // check for duplicate SKUs
+    var completed = new Set();
+    var multiRows = {};
 
     for (let i = 2; i <= range; i++) {
 
-        s
+        let skuCell = sheet.getRange(sku + i);
+        let skuValue = skuCell.getValue();
+
+        if (completed.has(skuValue)) {
+            multiRows[skuValue] = [];
+        }
+        else {
+            completed.add(skuValue);
+        }
+
+    }
+
+    for (let i = 2; i <= range; i++) {
+
+        let skuCell = sheet.getRange(sku + i);
+        let skuValue = skuCell.getValue();
 
         // init cells
         let cell1 = sheet.getRange("A" + i);
@@ -19,12 +37,19 @@ function main(workbook: ExcelScript.Workbook) {
         let value1 = cell1.getValue();
         let value2 = cell2.getValue();
 
-        // calculate
-        let calc1 = value1 / value2;
-        let calc2 = calc1.toFixed(2);
+        if (!(skuValue in multiRows)) {
 
-        // place calculated values in cells
-        cell3.setValue(calc1);
-        cell4.setValue(calc2);
+            // calculate
+            let calc1 = value1 / value2;
+            let calc2 = calc1.toFixed(2);
+
+            // place calculated values in cells
+            cell3.setValue(calc1);
+            cell4.setValue(calc2);
+        }
+
+        else {
+          //
+        }
     }
 }
